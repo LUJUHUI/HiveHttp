@@ -1,0 +1,25 @@
+server:
+  port: 10009
+
+spring:
+  datasource:
+    username: hive
+    password: hive1234
+    #生产环境
+    #url: jdbc:hive2://172.18.224.201:10000/pub_sentiment;auth=noSasl
+    #driver-class-name: org.apache.hive.jdbc.HiveDriver
+
+    #开发环境
+    url: jdbc:hive2://172.18.224.209:10000/pub_sentiment;auth=noSasl
+    driver-class-name: org.apache.hive.jdbc.HiveDriver
+
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+  type-aliases-package: com.pom.entity
+
+#showSql
+logging:
+  level:
+    com:
+      example:
+        mapper : debug

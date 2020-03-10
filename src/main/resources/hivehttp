@@ -1,0 +1,54 @@
+
+
+
+
+
+功能描述	网民观点
+测试地址	http://172.18.224.201:10009/pom/kemansNetizensViewsSql/{id}
+请求参数	id=所传的overview_original_id
+响应报文	{
+“poNetizensViews”：xxxxx,
+“poCluster”: xxxxx,
+“poRepostNum”:xxxxxx
+}
+
+
+功能描述	重要观点
+测试地址	http://172.18.224.201:10009/pom/invQueryHsql2/{id}
+请求参数	id=所传的overview_original_id
+响应报文	{
+“po_overview_id”：xxxxx
+}
+
+
+
+-------------------------------------------------------
+
+10ac24e8e8cfab58490897e08c6a4943
+
+
+
+功能描述	网民观点
+测试地址	http://172.18.224.209:10009/pom/kemansNetizensViewsSql/{id}
+请求参数	id=所传的overview_original_id
+响应报文	{
+“poNetizensViews”：xxxxx,
+“poCluster”: xxxxx,
+“poRepostNum”:xxxxxx
+}
+
+
+功能描述	重要观点
+测试地址	http://172.18.224.209:10009/pom/invQueryHsql2/{id}
+请求参数	id=所传的overview_original_id
+响应报文	{
+“po_overview_id”：xxxxx
+}
+
+curl http://172.18.224.209:10009/pom/kemansNetizensViewsSql/10ac24e8e8cfab58490897e08c6a4943
+
+curl http://172.18.224.209:10009/pom/invQueryHsql2/10ac24e8e8cfab58490897e08c6a4943
+
+curl http://172.18.224.201:10009/pom/kemansNetizensViewsSql/10ac24e8e8cfab58490897e08c6a4943
+
+curl http://172.18.224.201:10009/pom/invQueryHsql2/10ac24e8e8cfab58490897e08c6a4943

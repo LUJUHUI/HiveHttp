@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pom.mapper.UserMapper">
+
+    <!--网民观点-->
+    <select id="kemansNetizensViewsSql" resultType="User">
+        select
+            kmeans_netizens_views.po_netizens_views poNetizensViews,
+            kmeans_netizens_views.po_cluster        poCluster,
+            kmeans_netizens_views.po_repost_num     poRepostNum
+        from
+            pub_sentiment.kmeans_netizens_views
+        where
+            overview_original_id = #{id}
+    </select>
+
+    <!--重要观点-->
+    <select id="invQueryHsql2" resultType="java.lang.String">
+        select
+            important_netizens_views.po_overview_id
+        from
+            pub_sentiment.important_netizens_views
+        where
+            overview_original_id = #{id}
+    </select>
+
+    <!--微博历史数据汇总-->
+    <select id="countWeiboDataSql" resultType="HistoryDataCount">
+        select
+            history_data_count.total_account_number     total_account_number,
+            history_data_count.total_data_source        total_data_source,
+            history_data_count.total_data               total_data,
+            history_data_count.total_add_account_number total_add_account_number,
+            history_data_count.total_add_data_source    total_add_data_source,
+            history_data_count.total_add_total_data     total_add_total_data,
+            history_data_count.data_source              data_source,
+            history_data_count.ds                       ds
+        from
+            pub_sentiment.history_data_count
+        where
+            (substring(#{id2}, 0, 9) &gt;= '1980-01-01' and substring(#{id2}, 11, 20) &lt;= '2999-12-29')
+            and data_source = #{id}
+    </select>
+
+    <!--微博历史数据汇总-时间段内数据-->
+    <select id="countWeiboDataSqlTimeBucket" resultType="HistoryDataCount">
+        select
+            history_data_count.total_account_number     total_account_number,
+            history_data_count.total_data_source        total_data_source,
+            history_data_count.total_data               total_data,
+            history_data_count.total_add_account_number total_add_account_number,
+            history_data_count.total_add_data_source    total_add_data_source,
+            history_data_count.total_add_total_data     total_add_total_data,
+            history_data_count.data_source              data_source,
+            history_data_count.ds                       ds
+        from
+            pub_sentiment.history_data_count
+        where
+            (substring(#{id2}, 0, 9) &gt;= '1980-01-01' and substring(#{id2}, 11, 20) &lt;= '2999-12-29')
+          and data_source = #{id}
+    </select>
+
+    <!--微信历史数据汇总-->
+    <select id="countWeChatDataSql" resultType="HistoryDataCount">
+        select
+            history_data_count.total_account_number     total_account_number,
+            history_data_count.total_data_source        total_data_source,
+            history_data_count.total_data               total_data,
+            history_data_count.total_add_account_number total_add_account_number,
+            history_data_count.total_add_data_source    total_add_data_source,
+            history_data_count.total_add_total_data     total_add_total_data,
+            history_data_count.data_source              data_source,
+            history_data_count.ds                       ds
+        from
+            pub_sentiment.history_data_count
+        where
+            (substring(#{id2}, 0, 9) &gt;= '1980-01-01' and substring(#{id2}, 11, 20) &lt;= '2999-12-29')
+          and data_source = #{id}
+    </select>
+
+    <!--微信历史数据汇总-时间段-->
+    <select id="countWeChatDataSqlTimeBucket" resultType="HistoryDataCount">
+        select
+            history_data_count.total_account_number     total_account_number,
+            history_data_count.total_data_source        total_data_source,
+            history_data_count.total_data               total_data,
+            history_data_count.total_add_account_number total_add_account_number,
+            history_data_count.total_add_data_source    total_add_data_source,
+            history_data_count.total_add_total_data     total_add_total_data,
+            history_data_count.data_source              data_source,
+            history_data_count.ds                       ds
+        from
+            pub_sentiment.history_data_count
+        where
+            (substring(#{id2}, 0, 9) &gt;= '1980-01-01' and substring(#{id2}, 11, 20) &lt;= '2999-12-29')
+          and data_source = #{id}
+    </select>
+
+    <!--网媒历史数据汇总-->
+    <select id="countInternetMediaDataSqlTimeBucket" resultType="HistoryDataCount">
+        select
+            history_data_count.total_account_number     total_account_number,
+            history_data_count.total_data_source        total_data_source,
+            history_data_count.total_data               total_data,
+            history_data_count.total_add_account_number total_add_account_number,
+            history_data_count.total_add_data_source    total_add_data_source,
+            history_data_count.total_add_total_data     total_add_total_data,
+            history_data_count.data_source              data_source,
+            history_data_count.ds                       ds
+        from
+            pub_sentiment.history_data_count
+        where
+            (substring(#{id2}, 0, 9) &gt;= '1980-01-01' and substring(#{id2}, 11, 20) &lt;= '2999-12-29')
+          and data_source = #{id}
+    </select>
+
+    <!--总历史数据汇总-->
+    <select id="counthistoryDataSql" resultType="HistoryDataCount">
+        select
+            history_data_count.total_account_number     total_account_number,
+            history_data_count.total_data_source        total_data_source,
+            history_data_count.total_data               total_data,
+            history_data_count.total_add_account_number total_add_account_number,
+            history_data_count.total_add_data_source    total_add_data_source,
+            history_data_count.total_add_total_data     total_add_total_data,
+            history_data_count.data_source              data_source,
+            history_data_count.ds                       ds
+        from
+            pub_sentiment.history_data_count
+        where
+            (substring(#{id2}, 0, 9) &gt;= '1980-01-01' and substring(#{id2}, 11, 20) &lt;= '2999-12-29')
+          and data_source = #{id}
+    </select>
+
+    <!--总历史数据汇总-时间段-->
+    <select id="counthistoryDataSqlTimeBucket" resultType="HistoryDataCount">
+        select
+            history_data_count.total_account_number     total_account_number,
+            history_data_count.total_data_source        total_data_source,
+            history_data_count.total_data               total_data,
+            history_data_count.total_add_account_number total_add_account_number,
+            history_data_count.total_add_data_source    total_add_data_source,
+            history_data_count.total_add_total_data     total_add_total_data,
+            history_data_count.data_source              data_source,
+            history_data_count.ds                       ds
+        from
+            pub_sentiment.history_data_count
+        where
+            (substring(#{id2}, 0, 9) &gt;= '1980-01-01' and substring(#{id2}, 11, 20) &lt;= '2999-12-29')
+          and data_source = #{id}
+    </select>
+
+<!-- -->
+    <!--总历史数据汇总-全部-->
+    <select id="countAllHistoryDataSql" resultType="HistoryDataCount">
+        select
+            history_data_count.total_account_number     total_account_number,
+            history_data_count.total_data_source        total_data_source,
+            history_data_count.total_data               total_data,
+            history_data_count.total_add_account_number total_add_account_number,
+            history_data_count.total_add_data_source    total_add_data_source,
+            history_data_count.total_add_total_data     total_add_total_data,
+            history_data_count.data_source              data_source,
+            history_data_count.ds                       ds，
+        from
+            pub_sentiment.history_data_count
+        where
+            (substring(#{id2}, 0, 9) &gt;= '1980-01-01' and substring(#{id2}, 11, 20) &lt;= '2999-12-29')
+            and data_source = #{id}
+    </select>
+
+</mapper>
+
