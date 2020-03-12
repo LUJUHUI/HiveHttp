@@ -229,7 +229,7 @@
             history_data_count.total_add_data_source    total_add_data_source,
             history_data_count.total_add_total_data     total_add_total_data,
             history_data_count.data_source              data_source,
-            history_data_count.ds                       ds，
+            history_data_count.ds                       ds
         from
             pub_sentiment.history_data_count
         where
