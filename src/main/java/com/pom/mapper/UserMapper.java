@@ -1,5 +1,6 @@
 package com.pom.mapper;
 
+import com.pom.entity.AllHistoryDataCount;
 import com.pom.entity.HistoryDataCount;
 import com.pom.entity.User;
 import org.springframework.stereotype.Repository;
@@ -28,6 +29,9 @@ public interface UserMapper {
     /*微博历史数据汇总-时间段-可忽略*/
     List<HistoryDataCount> countWeiboDataSqlTimeBucket(String id, String id2);
 
+    /*微博历史数据汇总-总页*/
+    List<AllHistoryDataCount> weiboSql(String all);
+
     /*==========================================================================*/
     /*2 微信历史数据汇总-数据源-时间段双匹配*/
     List<HistoryDataCount> countWeChatDataSql(String id, String id2,BigInteger res_ts1,BigInteger res_ts2);
@@ -38,12 +42,18 @@ public interface UserMapper {
     /*微信历史数据汇总-时间段-可忽略*/
     List<HistoryDataCount> countWeChatDataSqlTimeBucket(String id, String id2);
 
+    /*微信历史数据汇总-总页*/
+    List<AllHistoryDataCount> wechatSql(String all);
+
     /*==========================================================================*/
     /*3 网媒历史数据汇总-数据源-时间段双匹配*/
     List<HistoryDataCount> countInternetMediaDataSqlTimeBucket(String id, String id2,BigInteger res_ts1,BigInteger res_ts2);
 
     /*网媒历史数据汇总-数据源单匹配*/
     List<HistoryDataCount> countInternetMediaDataSqlTimeBucket1(String id);
+
+    /*网媒历史数据汇总-总页*/
+    List<AllHistoryDataCount> internetMediaSql(String all);
 
     /*==========================================================================*/
     /*4 总历史数据汇总-数据源-时间段双匹配*/
@@ -58,5 +68,7 @@ public interface UserMapper {
 
     /*总历史数据汇总-全部-可忽略*/
     List<HistoryDataCount> countAllHistoryDataSql(String id, String id2);
+
+
 
 }

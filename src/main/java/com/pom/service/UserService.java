@@ -1,5 +1,6 @@
 package com.pom.service;
 
+import com.pom.entity.AllHistoryDataCount;
 import com.pom.entity.HistoryDataCount;
 import com.pom.entity.User;
 import com.pom.mapper.UserMapper;
@@ -42,6 +43,11 @@ public class UserService {
         return userMapper.countWeiboDataSqlTimeBucket(id, id2);
     }
 
+    /*微博历史数据汇总-总页*/
+    public List<AllHistoryDataCount> weiboSql(String all) {
+        return userMapper.weiboSql(all);
+    }
+
     /*==========================================================================*/
     /*2 微信历史数据汇总-数据源-时间段双匹配*/
     public List<HistoryDataCount> countWeChatDataSql(String id, String id2,BigInteger res_ts1,BigInteger res_ts2) {
@@ -58,6 +64,11 @@ public class UserService {
         return userMapper.countWeChatDataSqlTimeBucket(id, id2);
     }
 
+    /*微信历史数据汇总-总页*/
+    public List<AllHistoryDataCount> wechatSql(String all) {
+        return userMapper.wechatSql(all);
+    }
+
     /*==========================================================================*/
     /*3 网媒历史数据汇总-数据源-时间段双匹配*/
     public List<HistoryDataCount> countInternetMediaDataSqlTimeBucket(String id, String id2,BigInteger res_ts1,BigInteger res_ts2) {
@@ -67,6 +78,11 @@ public class UserService {
     /*网媒历史数据汇总-数据源单匹配*/
     public List<HistoryDataCount> countInternetMediaDataSqlTimeBucket1(String id) {
         return userMapper.countInternetMediaDataSqlTimeBucket1(id);
+    }
+
+    /*网媒历史数据汇总-总页*/
+    public List<AllHistoryDataCount> internetMediaSql(String all) {
+        return userMapper.internetMediaSql(all);
     }
 
     /*==========================================================================*/
@@ -90,6 +106,4 @@ public class UserService {
     public List<HistoryDataCount> countAllHistoryDataSql(String id, String id2) {
         return userMapper.countAllHistoryDataSql(id, id2);
     }
-
-
 }

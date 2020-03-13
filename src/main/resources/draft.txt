@@ -1,0 +1,4 @@
+
+
+//查询wechat近5天的数据
+select * from history_data_count where data_source='wechat' order by ds desc limit 5;

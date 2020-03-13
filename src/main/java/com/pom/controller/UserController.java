@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -97,7 +98,7 @@ public class UserController {
 
     /*总历史数据汇总-全部-双字段匹配*/
     @RequestMapping(value = "/countAllhistoryData/{id}/{id2}")
-    public String countAllhistoryData(@PathVariable String id, @PathVariable String id2) throws ParseException {
+    public String countAllHistoryData1(@PathVariable String id, @PathVariable String id2) throws ParseException {
         //转换时间戳 传参类型，例：2020-01-01A2020-12-12
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         //按照“A”切割
@@ -117,7 +118,7 @@ public class UserController {
 
         if (id.equals("weibo") && null != id2) {
             SuccessResult result = new SuccessResult();
-            List<HistoryDataCount> users = userService.countWeiboDataSql(id, id2,res_ts1,res_ts2);
+            List<HistoryDataCount> users = userService.countWeiboDataSql(id, id2, res_ts1, res_ts2);
             if (null != users && users.size() > 0) {
                 System.out.println("----------------------------------------------------");
                 result.addData("data", users);
@@ -127,7 +128,7 @@ public class UserController {
             return result.toString();
         } else if (id.equals("wechat") && null != id2) {
             SuccessResult result = new SuccessResult();
-            List<HistoryDataCount> users = userService.countWeChatDataSql(id, id2,res_ts1,res_ts2);
+            List<HistoryDataCount> users = userService.countWeChatDataSql(id, id2, res_ts1, res_ts2);
             if (null != users && users.size() > 0) {
                 System.out.println("----------------------------------------------------");
                 result.addData("data", users);
@@ -137,7 +138,7 @@ public class UserController {
             return result.toString();
         } else if (id.equals("internet_media") && null != id2) {
             SuccessResult result = new SuccessResult();
-            List<HistoryDataCount> users = userService.countInternetMediaDataSqlTimeBucket(id, id2,res_ts1,res_ts2);
+            List<HistoryDataCount> users = userService.countInternetMediaDataSqlTimeBucket(id, id2, res_ts1, res_ts2);
             if (null != users && users.size() > 0) {
                 System.out.println("----------------------------------------------------");
                 result.addData("data", users);
@@ -147,7 +148,7 @@ public class UserController {
             return result.toString();
         } else if (id.equals("history_count_data") && null != id2) {
             SuccessResult result = new SuccessResult();
-            List<HistoryDataCount> users = userService.counthistoryDataSql(id, id2,res_ts1,res_ts2);
+            List<HistoryDataCount> users = userService.counthistoryDataSql(id, id2, res_ts1, res_ts2);
             if (null != users && users.size() > 0) {
                 System.out.println("----------------------------------------------------");
                 result.addData("data", users);
@@ -161,7 +162,7 @@ public class UserController {
 
     /*总历史数据汇总-全部-单字段匹配*/
     @RequestMapping(value = "/countAllhistoryData/{id}")
-    public String countAllhistoryData2(@PathVariable String id) {
+    public String countAllHistoryData2(@PathVariable String id) {
         SuccessResult result;
         List users;
         //1 历史汇总数据-微博数据
@@ -206,6 +207,47 @@ public class UserController {
             }
             return result.toString();
 
+        }
+        return "Sorry,if you see this information,the reason maybe you input the wrong source type,please check it and try it again ! Thanks";
+    }
+
+    /*历史数据汇总-总页*/
+    @RequestMapping(value = "/countAllhistoryData2/{all}")
+    public String countAllHistoryData3(@PathVariable String all) {
+        SuccessResult result;
+        List weibo_data, wechat_data, intetnet_media_data;
+        HashMap<String, String> stringListHashMap = new HashMap<>();
+        if (all.equals("all")) {
+            result = new SuccessResult();
+
+            /*1 微博数据*/
+            weibo_data = this.userService.weiboSql(all);
+            if (null != weibo_data && weibo_data.size() > 0) {
+                result.addData("0", weibo_data);
+            } else {
+                result.addData("0", new ArrayList());
+            }
+            //String s1 = result.toString();
+
+            /*2 微信数据*/
+            wechat_data = this.userService.wechatSql(all);
+            if (null != wechat_data && wechat_data.size() > 0) {
+                result.addData("1", wechat_data);
+            } else {
+                result.addData("1", new ArrayList());
+            }
+           // String s2 = result.toString();
+
+            /*3 网媒数据*/
+            intetnet_media_data = this.userService.internetMediaSql(all);
+            if (null != intetnet_media_data && intetnet_media_data.size() > 0) {
+                result.addData("2", intetnet_media_data);
+            } else {
+                result.addData("2", new ArrayList());
+            }
+            //String s3 = result.toString();
+
+            return result.toString();
         }
         return "Sorry,if you see this information,the reason maybe you input the wrong source type,please check it and try it again ! Thanks";
     }

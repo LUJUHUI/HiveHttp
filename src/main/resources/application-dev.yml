@@ -6,12 +6,12 @@ spring:
     username: hive
     password: hive1234
     #生产环境
-    url: jdbc:hive2://172.18.224.201:10000/pub_sentiment;auth=noSasl
-    driver-class-name: org.apache.hive.jdbc.HiveDriver
+    #url: jdbc:hive2://172.18.224.201:10000/pub_sentiment;auth=noSasl
+    #driver-class-name: org.apache.hive.jdbc.HiveDriver
 
     #开发环境
-    #url: jdbc:hive2://172.18.224.209:10000/pub_sentiment;auth=noSasl
-    #driver-class-name: org.apache.hive.jdbc.HiveDriver
+    url: jdbc:hive2://172.18.224.209:10000/pub_sentiment;auth=noSasl
+    driver-class-name: org.apache.hive.jdbc.HiveDriver
 
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
@@ -23,3 +23,9 @@ logging:
     com:
       example:
         mapper : debug
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

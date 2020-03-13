@@ -3,7 +3,7 @@
 <mapper namespace="com.pom.mapper.UserMapper">
 
     <!--网民观点-->
-    <select id="kemansNetizensViewsSql" resultType="User">
+    <select id="kemansNetizensViewsSql" resultType="com.pom.entity.User">
         select
             kmeans_netizens_views.po_netizens_views poNetizensViews,
             kmeans_netizens_views.po_cluster        poCluster,
@@ -24,8 +24,9 @@
             overview_original_id = #{id}
     </select>
 
+    <!--===========================1=wechat-data-begin==========================================================-->
     <!--微博历史数据汇总-数据源-时间段双匹配-->
-    <select id="countWeiboDataSql" resultType="HistoryDataCount">
+    <select id="countWeiboDataSql" resultType="com.pom.entity.HistoryDataCount">
         select
             history_data_count.total_account_number     total_account_number,
             history_data_count.total_data_source        total_data_source,
@@ -43,7 +44,7 @@
     </select>
 
     <!--微博历史数据汇总-数据源单匹配-->
-    <select id="countWeiboDataSql1" resultType="HistoryDataCount">
+    <select id="countWeiboDataSql1" resultType="com.pom.entity.HistoryDataCount">
         select
             history_data_count.total_account_number     total_account_number,
             history_data_count.total_data_source        total_data_source,
@@ -59,8 +60,27 @@
             data_source = #{id}
     </select>
 
+    <!--微博历史数据汇总-总页-->
+    <select id="weiboSql" resultType="com.pom.entity.AllHistoryDataCount">
+        select
+            "微博" as type_name,
+            history_data_count.total_account_number     total_account_number,
+            history_data_count.total_data_source        total_data_source,
+            history_data_count.total_data               total_data,
+            history_data_count.total_add_account_number total_add_account_number,
+            history_data_count.total_add_data_source    total_add_data_source,
+            history_data_count.total_add_total_data     total_add_total_data,
+            history_data_count.data_source              data_source,
+            history_data_count.ds                       ds
+        from
+            pub_sentiment.history_data_count
+        where
+            data_source = "weibo"
+        distribute by ds sort by ds desc limit 5
+    </select>
+
     <!--微博历史数据汇总-时间段内数据-可忽略-->
-    <select id="countWeiboDataSqlTimeBucket" resultType="HistoryDataCount">
+    <select id="countWeiboDataSqlTimeBucket" resultType="com.pom.entity.HistoryDataCount">
         select
             history_data_count.total_account_number     total_account_number,
             history_data_count.total_data_source        total_data_source,
@@ -76,9 +96,11 @@
             (substring(#{id2}, 0, 9) &gt;= '1980-01-01' and substring(#{id2}, 11, 20) &lt;= '2999-12-29')
           and data_source = #{id}
     </select>
+    <!--==========================1==weibo-data-end==========================================================-->
 
+    <!--==========================2==wechat-data-begin=========================================================-->
     <!--微信历史数据汇总-数据源-时间段双匹配-->
-    <select id="countWeChatDataSql" resultType="HistoryDataCount">
+    <select id="countWeChatDataSql" resultType="com.pom.entity.HistoryDataCount">
         select
             history_data_count.total_account_number     total_account_number,
             history_data_count.total_data_source        total_data_source,
@@ -96,7 +118,7 @@
     </select>
 
     <!--微信历史数据汇总-数据源单匹配-->
-    <select id="countWeChatDataSql1" resultType="HistoryDataCount">
+    <select id="countWeChatDataSql1" resultType="com.pom.entity.HistoryDataCount">
         select
             history_data_count.total_account_number     total_account_number,
             history_data_count.total_data_source        total_data_source,
@@ -112,8 +134,27 @@
             data_source = #{id}
     </select>
 
+    <!--微信历史数据汇总-总页-->
+    <select id="wechatSql" resultType="com.pom.entity.AllHistoryDataCount">
+        select
+            "微信" as type_name,
+            history_data_count.total_account_number     total_account_number,
+            history_data_count.total_data_source        total_data_source,
+            history_data_count.total_data               total_data,
+            history_data_count.total_add_account_number total_add_account_number,
+            history_data_count.total_add_data_source    total_add_data_source,
+            history_data_count.total_add_total_data     total_add_total_data,
+            history_data_count.data_source              data_source,
+            history_data_count.ds                       ds
+        from
+            pub_sentiment.history_data_count
+        where
+            data_source = "wechat"
+        distribute by ds sort by ds desc limit 5
+    </select>
+
     <!--微信历史数据汇总-时间段-可忽略-->
-    <select id="countWeChatDataSqlTimeBucket" resultType="HistoryDataCount">
+    <select id="countWeChatDataSqlTimeBucket" resultType="com.pom.entity.HistoryDataCount">
         select
             history_data_count.total_account_number     total_account_number,
             history_data_count.total_data_source        total_data_source,
@@ -129,9 +170,11 @@
             (substring(#{id2}, 0, 9) &gt;= '1980-01-01' and substring(#{id2}, 11, 20) &lt;= '2999-12-29')
           and data_source = #{id}
     </select>
+    <!--==========================2==wechat-data-end==========================================================-->
 
+    <!--==========================3==internet-media-data-begin================================================-->
     <!--网媒历史数据汇总-数据源-时间段双匹配-->
-    <select id="countInternetMediaDataSqlTimeBucket" resultType="HistoryDataCount">
+    <select id="countInternetMediaDataSqlTimeBucket" resultType="com.pom.entity.HistoryDataCount">
         select
             history_data_count.total_account_number     total_account_number,
             history_data_count.total_data_source        total_data_source,
@@ -149,7 +192,7 @@
     </select>
 
     <!--网媒历史数据汇总-数据源单匹配-->
-    <select id="countInternetMediaDataSqlTimeBucket1" resultType="HistoryDataCount">
+    <select id="countInternetMediaDataSqlTimeBucket1" resultType="com.pom.entity.HistoryDataCount">
         select
             history_data_count.total_account_number     total_account_number,
             history_data_count.total_data_source        total_data_source,
@@ -165,9 +208,29 @@
             data_source = #{id}
     </select>
 
+    <!--网媒历史数据汇总-总页-->
+    <select id="internetMediaSql" resultType="com.pom.entity.AllHistoryDataCount">
+        select
+            "网媒" as type_name,
+            history_data_count.total_account_number     total_account_number,
+            history_data_count.total_data_source        total_data_source,
+            history_data_count.total_data               total_data,
+            history_data_count.total_add_account_number total_add_account_number,
+            history_data_count.total_add_data_source    total_add_data_source,
+            history_data_count.total_add_total_data     total_add_total_data,
+            history_data_count.data_source              data_source,
+            history_data_count.ds                       ds
+        from
+            pub_sentiment.history_data_count
+        where
+            data_source = "internet_media"
+        distribute by ds sort by ds desc limit 5
+    </select>
+    <!--==========================3==internet-media-data-end================================================-->
 
+    <!--==========================4==history-count-data-begin================================================-->
     <!--总历史数据汇总-数据源-时间段双匹配-->
-    <select id="counthistoryDataSql" resultType="HistoryDataCount">
+    <select id="counthistoryDataSql" resultType="com.pom.entity.HistoryDataCount">
         select
             history_data_count.total_account_number     total_account_number,
             history_data_count.total_data_source        total_data_source,
@@ -185,7 +248,7 @@
     </select>
 
     <!--总历史数据汇总-数据源单匹配-->
-    <select id="counthistoryDataSql1" resultType="HistoryDataCount">
+    <select id="counthistoryDataSql1" resultType="com.pom.entity.HistoryDataCount">
         select
             history_data_count.total_account_number     total_account_number,
             history_data_count.total_data_source        total_data_source,
@@ -202,7 +265,7 @@
     </select>
 
     <!--总历史数据汇总-时间段-->
-    <select id="counthistoryDataSqlTimeBucket" resultType="HistoryDataCount">
+    <select id="counthistoryDataSqlTimeBucket" resultType="com.pom.entity.HistoryDataCount">
         select
             history_data_count.total_account_number     total_account_number,
             history_data_count.total_data_source        total_data_source,
@@ -220,7 +283,7 @@
     </select>
 
     <!--总历史数据汇总-全部-->
-    <select id="countAllHistoryDataSql" resultType="HistoryDataCount">
+    <select id="countAllHistoryDataSql" resultType="com.pom.entity.HistoryDataCount">
         select
             history_data_count.total_account_number     total_account_number,
             history_data_count.total_data_source        total_data_source,
@@ -236,5 +299,6 @@
             (substring(#{id2}, 0, 9) &gt;= '1980-01-01' and substring(#{id2}, 11, 20) &lt;= '2999-12-29')
             and data_source = #{id}
     </select>
+    <!--==========================4==history-count-data-end================================================-->
 </mapper>
 
