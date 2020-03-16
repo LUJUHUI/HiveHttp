@@ -3,6 +3,7 @@ package com.pom.controller;
 import com.pom.entity.HistoryDataCount;
 import com.pom.entity.User;
 import com.pom.service.UserService;
+import com.pom.util.JsonResult;
 import com.pom.util.SuccessResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -223,32 +224,70 @@ public class UserController {
             /*1 微博数据*/
             weibo_data = this.userService.weiboSql(all);
             if (null != weibo_data && weibo_data.size() > 0) {
-                result.addData("0", weibo_data);
+                result.addData("weibo", weibo_data);
             } else {
-                result.addData("0", new ArrayList());
+                result.addData("weibo", new ArrayList());
             }
             //String s1 = result.toString();
 
             /*2 微信数据*/
             wechat_data = this.userService.wechatSql(all);
             if (null != wechat_data && wechat_data.size() > 0) {
-                result.addData("1", wechat_data);
+                result.addData("wechat", wechat_data);
             } else {
-                result.addData("1", new ArrayList());
+                result.addData("wechat", new ArrayList());
             }
-           // String s2 = result.toString();
+            // String s2 = result.toString();
 
             /*3 网媒数据*/
             intetnet_media_data = this.userService.internetMediaSql(all);
             if (null != intetnet_media_data && intetnet_media_data.size() > 0) {
-                result.addData("2", intetnet_media_data);
+                result.addData("internet_media", intetnet_media_data);
             } else {
-                result.addData("2", new ArrayList());
+                result.addData("internet_media", new ArrayList());
             }
             //String s3 = result.toString();
-
             return result.toString();
         }
         return "Sorry,if you see this information,the reason maybe you input the wrong source type,please check it and try it again ! Thanks";
+    }
+
+
+    /*历史数据汇总-总页*/
+    @RequestMapping(value = "/countAllhistoryData3/{all}")
+    public JsonResult<List> getUserList(@PathVariable String all) {
+        List weibo_data, wechat_data, intetnet_media_data;
+        SuccessResult result;
+        ArrayList<List> lists = new ArrayList<>();
+        /*1 微博数据*/
+        if (all.equals("all")) {
+            result = new SuccessResult();
+            weibo_data = this.userService.weiboSql(all);
+            if (null != weibo_data && weibo_data.size() > 0) {
+                result.addData("weibo", weibo_data);
+            } else {
+                result.addData("weibo", new ArrayList());
+            }
+            /*2 微信数据*/
+            wechat_data = this.userService.wechatSql(all);
+            if (null != wechat_data && wechat_data.size() > 0) {
+                result.addData("wechat", wechat_data);
+            } else {
+                result.addData("wechat", new ArrayList());
+            }
+            // String s2 = result.toString();
+
+            /*3 网媒数据*/
+            intetnet_media_data = this.userService.internetMediaSql(all);
+            if (null != intetnet_media_data && intetnet_media_data.size() > 0) {
+                result.addData("internet_media", intetnet_media_data);
+            } else {
+                result.addData("internet_media", new ArrayList());
+            }
+            lists.add(weibo_data);
+            lists.add(wechat_data);
+            lists.add(intetnet_media_data);
+        }
+        return new JsonResult<>(lists);
     }
 }

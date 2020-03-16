@@ -41,4 +41,10 @@ public class SuccessResult extends HashMap<String, Object> {
 
     }
 
+    public String toString2() {
+        return JSON.toJSONString(JSON.toJSONString(this, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteNullListAsEmpty,
+                SerializerFeature.WriteNullStringAsEmpty));
+
+    }
+
 }
