@@ -3,8 +3,10 @@ package com.pom.controller;
 import com.pom.entity.HistoryDataCount;
 import com.pom.entity.User;
 import com.pom.service.UserService;
+import com.pom.entity.AddEmptyData;
 import com.pom.util.JsonResult;
 import com.pom.util.SuccessResult;
+import com.pom.util.TimeLists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,10 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/pom")
@@ -26,6 +25,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    List<String> timelist = TimeLists.getTimeLists();
 
     /*网民观点*/
     @RequestMapping(value = "/kemansNetizensViewsSql/{id}")
@@ -256,38 +256,82 @@ public class UserController {
     /*历史数据汇总-总页*/
     @RequestMapping(value = "/countAllhistoryData3/{all}")
     public JsonResult<List> getUserList(@PathVariable String all) {
-        List weibo_data, wechat_data, intetnet_media_data;
-        SuccessResult result;
-        ArrayList<List> lists = new ArrayList<>();
-        /*1 微博数据*/
+       // List weibo_data, wechat_data, intetnet_media_data;
+       // SuccessResult result;
+        ArrayList<List> resultDataLists = new ArrayList<>();
+        historyDataCount(all, resultDataLists);
+        /*List数据已JSON格式输出*/
+        return new JsonResult<>(resultDataLists);
+    }
+
+    public void historyDataCount(@PathVariable String all, ArrayList<List> resultDataLists) {
+       // SuccessResult result;
+        List weibo_data,wechat_data,intetnet_media_data;
         if (all.equals("all")) {
-            result = new SuccessResult();
+            //result = new SuccessResult();
+
+            /*1 微博数据*/
+            ArrayList<Object> weiboData = new ArrayList<>();
             weibo_data = this.userService.weiboSql(all);
-            if (null != weibo_data && weibo_data.size() > 0) {
-                result.addData("weibo", weibo_data);
-            } else {
-                result.addData("weibo", new ArrayList());
+            for (int i = 0; i < timelist.size(); i++) {
+                int a = 0;
+                for (int j = 0; j < weibo_data.size(); j++) {
+                    Object o = weibo_data.get(j);
+                    if (o.toString().contains(timelist.get(i)) == true) {
+                        weiboData.add(o);
+                        a = 1;
+                        break;
+                    }
+                }
+                if (a == 0) {
+                    HashMap<Object, Object> ads = AddEmptyData.getWeiBoAddEmptyData(i);
+                    weiboData.add(0, ads);
+                }
             }
+
             /*2 微信数据*/
+            ArrayList<Object> wechatData = new ArrayList<>();
             wechat_data = this.userService.wechatSql(all);
-            if (null != wechat_data && wechat_data.size() > 0) {
-                result.addData("wechat", wechat_data);
-            } else {
-                result.addData("wechat", new ArrayList());
+            for (int i = 0; i < timelist.size(); i++) {
+                int a = 0;
+                for (int j = 0; j < wechat_data.size(); j++) {
+                    Object o = wechat_data.get(j);
+                    if (o.toString().contains(timelist.get(i)) == true) {
+                        wechatData.add(o);
+                        a = 1;
+                        break;
+                    }
+                }
+                if (a == 0) {
+                    HashMap<Object, Object> ads = AddEmptyData.getWeChatAddEmptyData(i);
+                    wechatData.add(0, ads);
+                }
             }
-            // String s2 = result.toString();
 
             /*3 网媒数据*/
+            ArrayList<Object> internetMediaData = new ArrayList<>();
             intetnet_media_data = this.userService.internetMediaSql(all);
-            if (null != intetnet_media_data && intetnet_media_data.size() > 0) {
-                result.addData("internet_media", intetnet_media_data);
-            } else {
-                result.addData("internet_media", new ArrayList());
+            for (int i = 0; i < timelist.size(); i++) {
+                int a = 0;
+                for (int j = 0; j < intetnet_media_data.size(); j++) {
+                    Object o = intetnet_media_data.get(j);
+                    if (o.toString().contains(timelist.get(i)) == true) {
+                        internetMediaData.add(o);
+                        a = 1;
+                        break;
+                    }
+                }
+                if (a == 0) {
+                    HashMap<Object, Object> ads = AddEmptyData.getInternetMediaAddEmptyData(i);
+                    internetMediaData.add(0, ads);
+                }
             }
-            lists.add(weibo_data);
-            lists.add(wechat_data);
-            lists.add(intetnet_media_data);
+            /*将最终结果汇总，添加到List表中*/
+            resultDataLists.add(weiboData);
+            resultDataLists.add(wechatData);
+            resultDataLists.add(internetMediaData);
         }
-        return new JsonResult<>(lists);
     }
+
+
 }

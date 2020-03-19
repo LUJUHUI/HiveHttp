@@ -76,7 +76,7 @@
             pub_sentiment.history_data_count
         where
             data_source = "weibo"
-            limit 5
+            order by ds desc limit 5
     </select>
 
     <!--微博历史数据汇总-时间段内数据-可忽略-->
@@ -150,7 +150,7 @@
             pub_sentiment.history_data_count
         where
             data_source = "wechat"
-        limit 5
+        order by ds desc limit 5
     </select>
 
     <!--微信历史数据汇总-时间段-可忽略-->
@@ -224,7 +224,7 @@
             pub_sentiment.history_data_count
         where
             data_source = "internet_media"
-        limit 5
+        order by ds desc limit 5
     </select>
     <!--==========================3==internet-media-data-end================================================-->
 
