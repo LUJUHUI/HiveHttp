@@ -228,7 +228,6 @@ public class UserController {
             } else {
                 result.addData("weibo", new ArrayList());
             }
-            //String s1 = result.toString();
 
             /*2 微信数据*/
             wechat_data = this.userService.wechatSql(all);
@@ -237,7 +236,6 @@ public class UserController {
             } else {
                 result.addData("wechat", new ArrayList());
             }
-            // String s2 = result.toString();
 
             /*3 网媒数据*/
             intetnet_media_data = this.userService.internetMediaSql(all);
@@ -246,7 +244,6 @@ public class UserController {
             } else {
                 result.addData("internet_media", new ArrayList());
             }
-            //String s3 = result.toString();
             return result.toString();
         }
         return "Sorry,if you see this information,the reason maybe you input the wrong source type,please check it and try it again ! Thanks";
@@ -256,8 +253,6 @@ public class UserController {
     /*历史数据汇总-总页*/
     @RequestMapping(value = "/countAllhistoryData3/{all}")
     public JsonResult<List> getUserList(@PathVariable String all) {
-       // List weibo_data, wechat_data, intetnet_media_data;
-       // SuccessResult result;
         ArrayList<List> resultDataLists = new ArrayList<>();
         historyDataCount(all, resultDataLists);
         /*List数据已JSON格式输出*/
@@ -265,11 +260,8 @@ public class UserController {
     }
 
     public void historyDataCount(@PathVariable String all, ArrayList<List> resultDataLists) {
-       // SuccessResult result;
-        List weibo_data,wechat_data,intetnet_media_data;
+        List weibo_data, wechat_data, intetnet_media_data;
         if (all.equals("all")) {
-            //result = new SuccessResult();
-
             /*1 微博数据*/
             ArrayList<Object> weiboData = new ArrayList<>();
             weibo_data = this.userService.weiboSql(all);
@@ -332,6 +324,4 @@ public class UserController {
             resultDataLists.add(internetMediaData);
         }
     }
-
-
 }
